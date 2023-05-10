@@ -24,11 +24,12 @@ Note that, if running locally, you can skip the first cell in each notebook that
 %env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 ```
 
-## Web-based Install-free usage
+## Web-based install-free usage
 
 Each notebooks is also mirrored on a Google Colab instance linked below. This is a browser-based service that bypasses the need for local installations, but requires a bit of setup before the code can be run.
 
 * [PDB file to OpenMM simulation](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-PDB-to-simulation.ipynb)
+* [SMILES to parameters](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-SMILES-to-parameters.ipynb)
 * [Vectorized representations](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-vectorized-representations.ipynb)
 * [Ligand in water](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-ligand-in-water.ipynb)
 * [Protein-ligand complex](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-protein-ligand.ipynb)
