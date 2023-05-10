@@ -6,6 +6,6 @@ dependencies:
   - python =3.10
   - openff-toolkit-examples =0.13
   - openff-forcefields =2023.05
-  - openff-interchange =0.3.2
+  - openff-interchange =0.3.3
   - openff-nagl = 0.2.2
   - openff-nagl-models =0.0.2
