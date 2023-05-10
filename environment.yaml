@@ -9,3 +9,4 @@ dependencies:
   - openff-interchange =0.3.3
   - openff-nagl = 0.2.2
   - openff-nagl-models =0.0.2
+  - jax
