@@ -35,3 +35,4 @@ Each notebooks is also mirrored on a Google Colab instance linked below. This is
 * [Protein-ligand complex](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-protein-ligand.ipynb)
 * [Retrieve a torsion drive from QCArchive](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-vectorized-representations.ipynb)
 * [Parametrize a non-canonical amino acid](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/R-custom_substructures_and_nagl.ipynb)
+* [Modify a ligand with RDKit reactions](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/update-install-instructions/G-rdkit-ligand-modification.ipynb)
