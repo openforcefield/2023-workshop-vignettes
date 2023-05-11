@@ -4,7 +4,6 @@ channels:
   - conda-forge
 dependencies:
   - python =3.10
-  - cudatoolkit =11.2
   - openff-toolkit-base =0.13
   - openff-forcefields =2023.05
   - openff-interchange-base =0.3.3
