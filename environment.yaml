@@ -10,3 +10,4 @@ dependencies:
   - openff-nagl = 0.2.2
   - openff-nagl-models =0.0.2
   - jax
+  - ipywidgets ==7.7.1
