@@ -19,7 +19,7 @@ $ mamba activate vignettes-env
 Note that, if running locally, you can skip the first cell in each notebook that looks like this:
 
 ```python
-!wget https://raw.githubusercontent.com/openforcefield/2023-workshop-vignettes/main/colab_setup.ipynb
+!wget -q https://raw.githubusercontent.com/openforcefield/2023-workshop-vignettes/main/colab_setup.ipynb
 %run colab_setup.ipynb
 %env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 ```
