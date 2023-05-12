@@ -12,9 +12,5 @@ dependencies:
   - rdkit
   - mdtraj
   - panedr
-  - openff-nagl = 0.2.2
-  - openff-nagl-models =0.0.2
-  - jax
-  - qcportal
   - nglview
   - ipywidgets ==7.7.1
