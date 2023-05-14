@@ -20,3 +20,4 @@ dependencies:
   - qcportal
   - nglview
   - ipywidgets ==7.7.1
+  - jupyterlab
