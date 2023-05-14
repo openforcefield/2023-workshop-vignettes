@@ -14,22 +14,24 @@ import numpy as np
 import nglview
 from nglview.base_adaptor import Structure, Trajectory
 
-from openff.units import unit
+from openff.models.models import DefaultModel
+from openff.units import unit, Quantity
+from pydantic import validator
+from pydantic.color import Color
 
 from openff.toolkit import Molecule, ForceField, Topology
 from openff.toolkit.typing.engines.smirnoff.parameters import BondType, ParameterType
 from openff.toolkit.utils.exceptions import ParameterLookupError
 
 
-AMBER_COLOR = np.array([255, 192, 0]) / 255
-SAGE_COLOR = np.array([141, 208, 169]) / 255
-NEW_PARAM_COLOR = np.array([191, 192, 238]) / 255
-WHITE = np.array([255, 255, 255]) / 255
+AMBER_COLOR = np.array([255, 192, 0])
+SAGE_COLOR = np.array([141, 208, 169])
+NEW_PARAM_COLOR = np.array([191, 192, 238])
+WHITE = np.array([255, 255, 255])
 
 DEFAULT_WIDTH = 980
 DEFAULT_HEIGHT = 400
 
-Color = Iterable[float]
 BondIndices = Tuple[int, int]
 
 MOLECULE_DEFAULT_REPS = [
@@ -54,7 +56,9 @@ def bond_in_ff(bond: BondType, ff: ForceField) -> bool:
     return in_ff("Bonds", bond, ff)
 
 
-def blend_colors(a: Color, b: Color, t: float = 0.5, w: float = 0.0) -> Color:
+def blend_colors(
+    a: tuple[float], b: tuple[float], t: float = 0.5, w: float = 0.0
+) -> tuple[float]:
     """
     Blend two colors with white.
 
@@ -73,29 +77,59 @@ def blend_colors(a: Color, b: Color, t: float = 0.5, w: float = 0.0) -> Color:
     w
         The proportion of white in the final mix.
     """
-    a = np.asarray(a)
-    b = np.asarray(b)
-    return np.sqrt(w * WHITE**2 + t * a**2 + (1 - t - w) * b**2)
+    a = np.asarray(a) / 255
+    b = np.asarray(b) / 255
+    blended = np.sqrt(w * WHITE**2 + t * a**2 + (1 - t - w) * b**2)
+    return blended * 255
+
+
+def color_to_floats(color: Color) -> tuple[float, float, float]:
+    """The color as a 3-tuple of floats between 0 and 1 representing R, G, B values.
+
+    Alpha is ignored."""
+    r, g, b = color.as_rgb_tuple(alpha=False)
+    return (r / 255.0, g / 255.0, b / 255.0)
+
+
+class AtomHighlight(DefaultModel):
+    """Color and radius of an atom's highlight."""
+
+    color: Optional[Color] = None
+    """The color of the highlight. Alpha is ignored."""
+    radius: Optional[Quantity] = None
+    """The radius of the highlight, in molecular-scale distance units."""
+
+    @validator("radius")
+    def radius_is_distance(cls, value: Optional[Quantity]) -> Optional[Quantity]:
+        if value is not None and not value.is_compatible_with(unit.angstrom):
+            raise ValueError("Radius should have dimensions of distance")
+        return value
+
+    @classmethod
+    def _from_color_or_self(cls, obj: Union[Color, "AtomHighlight"]) -> "AtomHighlight":
+        if isinstance(obj, cls):
+            return obj.copy()
+        return cls(color=obj)
 
 
 def draw_molecule(
     molecule: Union[str, Molecule, Chem.Mol],
     image_width: int = DEFAULT_WIDTH,
     image_height: int = DEFAULT_HEIGHT,
-    highlight_atoms: Optional[Union[List[int], Dict[int, Color]]] = None,
-    highlight_bonds: Optional[
-        Union[List[BondIndices], Dict[BondIndices, Color]]
+    highlight_atoms: Optional[
+        Union[list[int], dict[int, Union[Color, AtomHighlight]]]
     ] = None,
-    atom_notes: Optional[Dict[int, str]] = None,
-    bond_notes: Optional[Dict[BondIndices, str]] = None,
+    highlight_bonds: Optional[
+        Union[list[BondIndices], dict[BondIndices, Color]]
+    ] = None,
+    atom_notes: Optional[dict[int, str]] = None,
+    bond_notes: Optional[dict[BondIndices, str]] = None,
     explicit_hydrogens: Optional[bool] = None,
     color_by_element: Optional[bool] = None,
 ) -> SVG:
     """Draw a molecule
-
     Parameters
     ==========
-
     molecule
         The molecule to draw.
     image_width
@@ -103,12 +137,11 @@ def draw_molecule(
     image_height
         The height of the resulting image in pixels.
     highlight_atoms
-        A list of atom indices to highlight, or a map from indices to colors.
-        Colors should be given as triplets of floats between 0.0 and 1.0.
-    highlight_atoms
+        A list of atom indices to highlight, or a map from indices to colors or
+        ``AtomHighlights``. Colors are interpreted by Pydantic.
+    highlight_bonds
         A list of pairs of atom indices indicating bonds to highlight, or a map
-        from index pairs to colors. Colors should be given as triplets of floats
-        between 0.0 and 1.0.
+        from index pairs to colors. Colors are interpreted by Pydantic.
     atom_notes
         A map from atom indices to a string that should be printed near the
         atom.
@@ -122,10 +155,8 @@ def draw_molecule(
         If True, color heteroatoms according to their element; if False, the
         image will be black and white. By default, uses black and white when
         highlight_atoms or highlight_bonds is provided, and color otherwise.
-
     Raises
     ======
-
     KeyError
         When an atom or bond in highlight_atoms or highlight_bonds is missing
         from the image, including when it is present in the molecule but hidden.
@@ -159,21 +190,37 @@ def draw_molecule(
     if highlight_atoms is None:
         highlight_atoms = []
         highlight_atom_colors = None
+        highlight_atom_radii = None
     elif isinstance(highlight_atoms, dict):
+        highlight_atoms = {
+            idx_map[i]: AtomHighlight._from_color_or_self(v)
+            for i, v in highlight_atoms.items()
+            if i in idx_map
+        }
         highlight_atom_colors = {
-            idx_map[i]: tuple(c) for i, c in highlight_atoms.items() if i in idx_map
+            k: color_to_floats(v.color)
+            for k, v in highlight_atoms.items()
+            if v.color is not None
+        }
+        highlight_atom_radii = {
+            k: v.radius.m_as(unit.angstrom)
+            for k, v in highlight_atoms.items()
+            if v.radius is not None
         }
         highlight_atoms = list(highlight_atoms.keys())
     else:
         highlight_atoms = [idx_map[i] for i in highlight_atoms if i in idx_map]
         highlight_atom_colors = None
+        highlight_atom_radii = None
 
     if highlight_bonds is None:
         highlight_bonds = []
         highlight_bond_colors = None
     elif isinstance(highlight_bonds, dict):
         highlight_bond_colors = {
-            rdmol.GetBondBetweenAtoms(idx_map[i_a], idx_map[i_b]).GetIdx(): tuple(v)
+            rdmol.GetBondBetweenAtoms(
+                idx_map[i_a], idx_map[i_b]
+            ).GetIdx(): color_to_floats(v)
             for (i_a, i_b), v in highlight_bonds.items()
             if i_a in idx_map and i_b in idx_map
         }
@@ -213,6 +260,7 @@ def draw_molecule(
         rdmol,
         highlightAtoms=highlight_atoms,
         highlightAtomColors=highlight_atom_colors,
+        highlightAtomRadii=highlight_atom_radii,
         highlightBonds=highlight_bonds,
         highlightBondColors=highlight_bond_colors,
     )
