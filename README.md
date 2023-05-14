@@ -35,7 +35,7 @@ Each notebooks is also mirrored on a Google Colab instance linked below. This is
 * [🟢 Modify a ligand with RDKit reactions](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-rdkit-ligand-modification.ipynb)
 * [🟢 Retrieve a torsion drive from QCArchive](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-retrieve-qcarchive-torsiondrive.ipynb)
 * [🟢 Vectorized representations](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-vectorized-representations.ipynb)
-* [🟡 Protein-ligand complex via Interchange combination](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-protein-ligand.ipynb)
+* [🟡 Protein-ligand complex via Interchange combination](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/Y-interchange-combination-export.ipynb)
 * [🟡 Importing a prepared OpenMM system via Interchange](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/Y-from-openmm-xml.ipynb)
 * [🟡 Preparing mixed solvents and exporting to GROMACS](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/Y-interchange-gromacs-export.ipynb)
 * [🟡 Micelle self-assembly](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/Y-micelle-self-assembly.ipynb)
