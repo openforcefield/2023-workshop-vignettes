@@ -79,7 +79,7 @@ def blend_colors(a: Color, b: Color, t: float = 0.5, w: float = 0.0) -> Color:
 
 
 def draw_molecule(
-    molecule: Union[Molecule, Chem.Mol],
+    molecule: Union[str, Molecule, Chem.Mol],
     image_width: int = DEFAULT_WIDTH,
     image_height: int = DEFAULT_HEIGHT,
     highlight_atoms: Optional[Union[List[int], Dict[int, Color]]] = None,
@@ -132,6 +132,8 @@ def draw_molecule(
     """
     if isinstance(molecule, FrozenMolecule):
         rdmol = molecule.to_rdkit()
+    elif isinstance(molecule, str):
+        rdmol = Molecule.from_smiles(molecule).to_rdkit()
     else:
         rdmol = molecule
 
