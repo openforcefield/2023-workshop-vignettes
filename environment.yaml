@@ -7,6 +7,8 @@ dependencies:
   - openff-toolkit-base =0.13
   - openff-forcefields =2023.05
   - openff-interchange-base =0.3.3
+  - openff-bespokefit =0.2.2
+  - xtb-python
   - openmm
   - ambertools
   - rdkit
