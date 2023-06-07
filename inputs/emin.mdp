@@ -16,5 +16,3 @@ DispCorr                = no        ; account for cut-off vdW scheme -
 ;in case of CHARMM DispCorr = EnerPres only for monolayers
 coulombtype             = PME       ; Particle Mesh Ewald for long-range electrostatics
 fourierspacing          = 0.15     ; grid spacing for FFT
-
-

@@ -1,5 +1,5 @@
-title                   = CHARMM NPT equilibration 
-define                  = -DPOSRES  ; position restrain the protein 
+title                   = CHARMM NPT equilibration
+define                  = -DPOSRES  ; position restrain the protein
 
 ; Parameters describing what to do, when to stop and what to save
 integrator              = md        ; leap-frog integrator
@@ -10,7 +10,7 @@ nstenergy               = 500       ; save energy and temperature every 1.0 ps
 ; periodic boundary condition
 pbc                     = xyz       ;
 
-continuation            = yes      
+continuation            = yes
 
 ; Pressure coupling is on
 pcoupl                  = C-rescale             ; Pressure coupling on in NPT
@@ -22,7 +22,7 @@ refcoord_scaling        = com
 
 ; Keep system temperature fluctuating physically correct
 tcoupl                  = V-rescale           ; modified Berendsen thermostat
-tc-grps                 = system   ; coupling groups 
+tc-grps                 = system   ; coupling groups
 tau_t                   = 1.0      ; time constant, in ps
 ref_t                   = 300      ; reference temperature, one for each group, in K
 
@@ -36,9 +36,3 @@ DispCorr                = no        ; account for cut-off vdW scheme -
 ;in case of CHARMM DispCorr = EnerPres only for monolayers
 coulombtype             = PME       ; Particle Mesh Ewald for long-range electrostatics
 fourierspacing          = 0.15     ; grid spacing for FFT
-
-
-
-
-
-
