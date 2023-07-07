@@ -31,7 +31,7 @@ Each notebooks is also mirrored on a Google Colab instance linked below. This is
 * [🟢 PDB file to OpenMM simulation with bespoke parameters](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-PDB-bespokefit-to-simulation.ipynb)
 * [🟢 SMILES to parameters](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-SMILES-to-parameters.ipynb)
 * [🟢 Ligand in water](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-ligand-in-water.ipynb)
-* [🟢 Parametrize a non-canonical amino acid](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/R-custom_substructures_and_nagl.ipynb)
+* [🟢 Parametrize a non-canonical amino acid](https://gist.github.com/Yoshanuikabundi/66007cb9966b1455a259baaf7cd7e7c3)
 * [🟢 Modify a ligand with RDKit reactions](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-rdkit-ligand-modification.ipynb)
 * [🟢 Retrieve a torsion drive from QCArchive](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-retrieve-qcarchive-torsiondrive.ipynb)
 * [🟢 Vectorized representations](https://colab.research.google.com/github/openforcefield/2023-workshop-vignettes/blob/main/G-vectorized-representations.ipynb)
