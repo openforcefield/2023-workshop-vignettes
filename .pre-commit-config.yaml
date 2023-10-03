@@ -17,8 +17,6 @@ repos:
   rev: 1.7.0
   hooks:
     - id: nbqa-pyupgrade
-      files: ^examples
       args:
         - --py38-plus
     - id: nbqa-isort
-      files: ^examples
