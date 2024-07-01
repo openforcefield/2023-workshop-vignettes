@@ -2,7 +2,7 @@ ci:
   autoupdate_schedule: "quarterly"
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.5.0
+  rev: v4.6.0
   hooks:
   - id: check-yaml
   - id: end-of-file-fixer
@@ -10,11 +10,11 @@ repos:
     exclude: '\.(pdb|gro|top|sdf)$'
   - id: debug-statements
 - repo: https://github.com/psf/black
-  rev: 23.12.1
+  rev: 24.4.2
   hooks:
   - id: black-jupyter
 - repo: https://github.com/nbQA-dev/nbQA
-  rev: 1.7.1
+  rev: 1.8.5
   hooks:
     - id: nbqa-pyupgrade
       args:
