@@ -20,7 +20,6 @@ from openff.toolkit import Molecule, ForceField, Topology
 from openff.toolkit.typing.engines.smirnoff.parameters import BondType, ParameterType
 from openff.toolkit.utils.exceptions import ParameterLookupError
 
-
 AMBER_COLOR = np.array([255, 192, 0]) / 255
 SAGE_COLOR = np.array([141, 208, 169]) / 255
 NEW_PARAM_COLOR = np.array([191, 192, 238]) / 255
